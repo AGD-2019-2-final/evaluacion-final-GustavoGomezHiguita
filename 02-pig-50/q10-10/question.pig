@@ -26,3 +26,12 @@ u = LOAD 'data.csv' USING PigStorage(',')
 --
 -- >>> Escriba su respuesta a partir de este punto <<<
 --
+data = FOREACH u GENERATE surname, SIZE(surname);
+
+--data = FILTER data BY (surname MATCHES 'Hamilton','Garrett','Holcomb','Coffey','Conway');
+
+data = FILTER data BY surname =='Hamilton' OR surname == 'Garrett' OR surname == 'Holcomb' OR surname == 'Coffey' OR surname == 'Conway';
+
+data = ORDER data BY $1 DESC;
+
+STORE data INTO 'output' USING PigStorage(',');

@@ -40,5 +40,13 @@ LOAD DATA LOCAL INPATH 'tbl1.csv' INTO TABLE tbl1;
 --
 -- >>> Escriba su respuesta a partir de este punto <<<
 --
+DROP TABLE IF EXISTS sum_values;
 
+CREATE TABLE sum_values AS
+SELECT c2, SUM(value) FROM tbl0 LATERAL VIEW explode(c6) key_val AS key, value
+GROUP BY c2;
+
+INSERT OVERWRITE LOCAL DIRECTORY 'output'
+ROW FORMAT DELIMITED FIELDS TERMINATED BY ','
+SELECT * FROM sum_values;
 

@@ -12,3 +12,12 @@ fs -rm -f -r output;
 --
 -- >>> Escriba su respuesta a partir de este punto <<<
 --
+data = LOAD 'data.tsv' AS (upper_case:CHARARRAY, lower_case:BAG{tup:TUPLE(letter:CHARARRAY)},obs:MAP[]);
+
+data = FOREACH data GENERATE FLATTEN(obs) AS obs;
+
+grouped = GROUP data BY obs;
+
+letter_count = FOREACH grouped GENERATE group, COUNT($1);
+
+STORE letter_count INTO 'output' USING PigStorage(',');
