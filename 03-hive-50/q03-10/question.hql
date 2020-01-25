@@ -16,12 +16,11 @@ CREATE TABLE data (letter    STRING,
                    full_dates STRING,
                    value     INT)
 ROW FORMAT DELIMITED
-FIELDS TERMINATED BY '\t'
-TBLPROPERTIES ("skip.header.line.count"="1");
+FIELDS TERMINATED BY '\t';
 
 LOAD DATA LOCAL INPATH 'data.tsv' OVERWRITE INTO TABLE data;
 
-CROP TABLE IF EXISTS just_val;
+DROP TABLE IF EXISTS just_val;
 CREATE TABLE just_val AS
 SELECT DISTINCT value FROM data 
 ORDER BY value

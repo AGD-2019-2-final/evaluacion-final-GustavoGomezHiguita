@@ -16,8 +16,7 @@ CREATE TABLE data (letter    STRING,
                    full_date STRING,
                    value     INT)
 ROW FORMAT DELIMITED
-FIELDS TERMINATED BY '\t'
-TBLPROPERTIES ("skip.header.line.count"="1");
+FIELDS TERMINATED BY '\t';
 
 LOAD DATA LOCAL INPATH 'data.tsv' OVERWRITE INTO TABLE data;
 
